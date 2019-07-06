@@ -11,7 +11,8 @@
 #include <sys/socket.h>
 
 #define PORT 12345
-#define ADDR "127.0.0.1"
+//#define ADDR "127.0.0.1"
+#define ADDR "172.29.156.90"
 
 
 int main(int argc, char* argv[]) {
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]) {
             perror("read");
             exit(1);
         }
-        else if(ret_read < sizeof(buf)-1) {
+        else if(ret_read == 0) {
             break;
         }
 
