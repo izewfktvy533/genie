@@ -12,7 +12,8 @@
 
 #define PORT 12345
 //#define ADDR "127.0.0.1"
-#define ADDR "172.29.156.90"
+//#define ADDR "172.29.156.90"
+#define ADDR "172.29.156.50"
 
 
 int main(int argc, char* argv[]) {
