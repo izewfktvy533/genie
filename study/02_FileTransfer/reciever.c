@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    ret = inet_pton(AF_INET, ADDR, &s_addr.sin_addr.s_addr);
+    ret = inet_pton(AF_INET, ADDR, &addr.sin_addr.s_addr);
     
     if(ret == 0) {
         fprintf(stderr, "Not in presentation format\n");
@@ -80,6 +80,7 @@ int main(int argc, char* argv[]) {
 
     while(1) {
         ret_read = read(acc, buf, sizeof(buf)-1);
+        ret_recv = recv(acc, buf, sizeof(buf)-1, 0);
         
         if(write(fd, buf, strlen(buf)) < 0) {
             perror("write");
@@ -92,7 +93,7 @@ int main(int argc, char* argv[]) {
             perror("read");
             exit(1);
         }
-        else if(ret_read == 0) {
+        else if(ret_read < sizeof(buf)-1) {
             break;
         }
 

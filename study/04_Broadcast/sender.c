@@ -78,7 +78,8 @@ int main(int argc, char* argv[]) {
             perror("read");
             exit(1);
         }
-        else if(ret_read < sizeof(buf)-1) {
+ 
+        if(ret_read < sizeof(buf)-1) {
             break;
         }
     }

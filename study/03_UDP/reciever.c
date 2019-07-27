@@ -11,7 +11,8 @@
 #include <sys/socket.h>
 
 #define PORT 6789
-#define ADDR "127.0.0.1"
+//#define ADDR "172.29.156.90"
+#define ADDR "172.29.156.50"
 
 
 int main(int argc, char* argv[]) {
@@ -21,6 +22,7 @@ int main(int argc, char* argv[]) {
     int ret;
     int soc;
     int acc;
+    int ret_write;
     int ret_recvfrom;
     socklen_t len;
     char buf[4097];
@@ -40,7 +42,7 @@ int main(int argc, char* argv[]) {
 
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    ret = inet_pton(AF_INET, ADDR, &s_addr.sin_addr.s_addr);
+    ret = inet_pton(AF_INET, ADDR, &addr.sin_addr.s_addr);
 
     if(ret == 0) {
         fprintf(stderr, "Non in presentation format\n");
@@ -61,11 +63,9 @@ int main(int argc, char* argv[]) {
     int n = 0;
 
     while(1) {
-        n += 1;
         ret_recvfrom = recvfrom(soc, buf, sizeof(buf)-1, 0, (struct sockaddr*)&s_addr, &len);
-        printf("%d %d\n", n, ret_recvfrom);
 
-        if(write(fd, buf, strlen(buf)) < 0) {
+        if((ret_write = write(fd, buf, strlen(buf))) < 0) {
             perror("write");
             exit(1);
         }
@@ -76,7 +76,8 @@ int main(int argc, char* argv[]) {
             perror("recvfrom");
             exit(1);
         }
-        else if(ret_recvfrom == 0) {
+        
+        if(ret_write < sizeof(buf)-1) {
             break;
         }
     }
