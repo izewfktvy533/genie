@@ -41,12 +41,12 @@ int main(int argc, char* argv[]) {
 
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    ret = inet_pton(AF_INET, ADDR, &s_addr.sin_addr.s_addr);
-
-    /*
+    ret = inet_pton(AF_INET, ADDR, &addr.sin_addr.s_addr);
+    
+    // TODO: ネットワークインタフェースを任意に選択できるようにする
     ret = 1;
     addr.sin_addr.s_addr = INADDR_ANY;
-    */
+
 
     if(ret == 0) {
         fprintf(stderr, "Non in presentation format\n");
@@ -78,7 +78,9 @@ int main(int argc, char* argv[]) {
             perror("recvfrom");
             exit(1);
         }
-        else if(ret_write < sizeof(buf)-1) {
+
+        // FIX: データ送信の最後のパケットが失われた場合、データ受信を終えることができない 
+        if(ret_write < sizeof(buf)-1) {
             break;
         }
     }
