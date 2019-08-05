@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     while(1) {
         ret_read = read(fd, buf, sizeof(buf)-1);
 
-        if(write(soc, buf, strlen(buf)) < 0) {
+        if(send(soc, buf, strlen(buf), 0) < 0) {
             perror("write");
             exit(1);
         }
