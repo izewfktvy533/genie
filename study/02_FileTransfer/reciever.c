@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     struct sockaddr_in s_addr;
     int fd;
     int ret;
-    ssize_t ret_read;
+    ssize_t ret_recv;
     socklen_t len;
     int soc;
     int acc;
@@ -79,7 +79,6 @@ int main(int argc, char* argv[]) {
     printf("\n");
 
     while(1) {
-        ret_read = read(acc, buf, sizeof(buf)-1);
         ret_recv = recv(acc, buf, sizeof(buf)-1, 0);
         
         if(write(fd, buf, strlen(buf)) < 0) {
@@ -89,11 +88,11 @@ int main(int argc, char* argv[]) {
 
         memset(buf, 0, sizeof(buf));
 
-        if(ret_read == -1) {
-            perror("read");
+        if(ret_recv == -1) {
+            perror("recv");
             exit(1);
         }
-        else if(ret_read < sizeof(buf)-1) {
+        else if(ret_recv < sizeof(buf)-1) {
             break;
         }
 
