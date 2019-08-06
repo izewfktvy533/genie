@@ -50,11 +50,16 @@ NodeInfo_t** create_node_info_table() {
 
 void _show_node_info_table(NodeInfo_t**  node_info_table) {
     int i;
+    char addr[INET_ADDRSTRLEN];
     struct in_addr inaddr;
 
     for(i=0; i<TABLE_SIZE; i++) {
         inaddr.s_addr = node_info_table[i]->addr;
-        printf("%s ", inet_ntoa(inaddr));
+
+        //TODO: Need to implement error handling
+        inet_ntop(AF_INET, &inaddr, addr, sizeof(addr));
+        
+        printf("%s ", addr);
         printf("%d\n", ntohs(node_info_table[i]->port));
     }
 
