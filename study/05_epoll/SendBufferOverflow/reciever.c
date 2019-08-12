@@ -31,7 +31,7 @@ int main() {
 
     printf("after accept\n");
 
-    for(i=0; i<10; i++) {
+    for(i=0; i<30; i++) {
         sleep(2);
         n = read(sock, buf, sizeof(buf));
         printf("drain data %d bytes\n", n);
