@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 
     key = ftok("./test", 0);
 
-    shm = shmget(key, 128, IPC_CREAT|0600);
+    shm = shmget(key, 128, 0600);
 
     ptr = shmat(shm, NULL, 0);
 
