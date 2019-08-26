@@ -25,6 +25,7 @@ int main(int argc, char* argv[]) {
     int soc;
     int acc;
     char buf[4097];
+    int yes = 1;
 
 
     memset(buf, 0, sizeof(buf));
@@ -42,6 +43,8 @@ int main(int argc, char* argv[]) {
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
     ret = inet_pton(AF_INET, ADDR, &addr.sin_addr.s_addr);
+
+    setsockopt(soc, SOL_SOCKET, SO_REUSEADDR, (const char*)&yes, sizeof(yes));
     
     if(ret == 0) {
         fprintf(stderr, "Not in presentation format\n");
